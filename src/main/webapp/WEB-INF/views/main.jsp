@@ -12,20 +12,13 @@
 <html>
   <head>
 <link href="<c:url value="/resources/css/main.css"/>" rel="stylesheet"/>
-    <title>$Title$</title>
+    <title>Main</title>
   </head>
   <body>
-  $END$
-  ${helloText}
-  <fieldset>
-    <label>Username</label>
-    <input type="text" required placeholder="Input login"/>
-    <label>Password</label>
-    <input type="password" required placeholder="Input password."/>
-  </fieldset>
+  Hello user:
+  <p>User name - ${user.name}</p>
+  <p>User password - ${user.password}</p>
+  <p>User is administrator - ${user.admin}</p>
 
-  <footer>
-    <input type="submit" value="Submit"/>
-  </footer>
   </body>
 </html>
