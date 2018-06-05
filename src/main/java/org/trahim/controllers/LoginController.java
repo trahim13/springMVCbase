@@ -1,10 +1,10 @@
 package org.trahim.controllers;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.trahim.objects.User;
 
@@ -37,4 +37,22 @@ public class LoginController {
     }
 
 
+
+
+
+    @RequestMapping(value = "/get-json-user/{name}/{password}/{admin}", method = RequestMethod.GET, produces = "application/json")
+    @ResponseBody
+    public User getJsonUser(@PathVariable("name") String name, @PathVariable("password") String password,@PathVariable("admin") boolean admin) {
+        User user = new User();
+        user.setName(name);
+        user.setPassword(password);
+        user.setAdmin(admin);
+        return user;
+    }
+
+    @RequestMapping(value = "/put-json-user", method = RequestMethod.POST, consumes = "application/json")
+    public ResponseEntity<String> setJsonUser(@RequestBody User user) {
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }
