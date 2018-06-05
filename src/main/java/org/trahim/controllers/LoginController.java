@@ -11,22 +11,28 @@ import org.trahim.objects.User;
 import javax.validation.Valid;
 
 @Controller
+@SessionAttributes("user")
 public class LoginController {
 
+    @ModelAttribute("user")
+    public User createUser() {
+        return new User();
+    }
+
     @RequestMapping(value = {"/", "login"}, method = RequestMethod.GET)
-    public ModelAndView main() {
-        return new ModelAndView("login", "user", new User());
+    public ModelAndView main(@ModelAttribute User user) {
+        return new ModelAndView("login", "user", user);
 
     }
 
     @RequestMapping(value = "/check-user", method = RequestMethod.POST)
-    public ModelAndView checkUser(@Valid @ModelAttribute("user") User user, BindingResult bindingResult) {
-        ModelAndView modelAndView = new ModelAndView();
+    public ModelAndView checkUser(@Valid @ModelAttribute("user") User user, BindingResult bindingResult, ModelAndView modelAndView) {
+
         if (bindingResult.hasErrors()) {
             modelAndView.setViewName("login");
         } else {
             modelAndView.setViewName("main");
-            modelAndView.addObject("user", user);
+//            modelAndView.addObject("user", user);
         }
         return modelAndView;
     }
