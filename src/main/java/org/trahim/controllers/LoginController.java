@@ -1,11 +1,14 @@
 package org.trahim.controllers;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.trahim.objects.User;
+
+import javax.validation.Valid;
 
 @Controller
 public class LoginController {
@@ -17,10 +20,14 @@ public class LoginController {
     }
 
     @RequestMapping(value = "/check-user", method = RequestMethod.POST)
-    public ModelAndView checkUser(@ModelAttribute("user") User user) {
+    public ModelAndView checkUser(@Valid @ModelAttribute("user") User user, BindingResult bindingResult) {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("main");
-        modelAndView.addObject("user", user);
+        if (bindingResult.hasErrors()) {
+            modelAndView.setViewName("login");
+        } else {
+            modelAndView.setViewName("main");
+            modelAndView.addObject("user", user);
+        }
         return modelAndView;
     }
 

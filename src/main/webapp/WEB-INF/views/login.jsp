@@ -20,9 +20,11 @@
 
         <form:label path="name">User name</form:label>
         <form:input path="name"/>
+        <form:errors path="name"/>
 
         <form:label path="password">Password</form:label>
         <form:password path="password"/>
+        <form:errors path="password"/>
 
 
     </fieldset>
