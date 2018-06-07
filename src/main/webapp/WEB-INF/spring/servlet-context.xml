@@ -21,4 +21,10 @@
             <bean class="org.trahim.interceptors.LoginInterceptor"/>
         </mvc:interceptor>
     </mvc:interceptors>
+
+
+    <bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+        <property name="basename" value="/WEB-INF/locales/messages"/>
+        <property name="defaultEncoding" value="utf-8"/>
+    </bean>
 </beans>

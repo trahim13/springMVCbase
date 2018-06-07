@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%--
   Created by IntelliJ IDEA.
   User: User
@@ -18,11 +19,11 @@
 
     <fieldset>
 
-        <form:label path="name">User name</form:label>
+        <form:label path="name"><spring:message code="username"/></form:label>
         <form:input path="name"/>
         <form:errors path="name"/>
 
-        <form:label path="password">Password</form:label>
+        <form:label path="password"><spring:message code="password"/></form:label>
         <form:password path="password"/>
         <form:errors path="password"/>
 
@@ -30,10 +31,10 @@
     </fieldset>
 
     <footer>
-        <form:label path="admin">is Admin?</form:label>
+        <form:label path="admin"><spring:message code="admin"/></form:label>
         <form:checkbox path="admin"/>
 
-        <input type="submit" value="Submit"/>
+        <input type="submit" value="<spring:message code="submit"/>"/>
     </footer>
 </form:form>
 
