@@ -8,7 +8,7 @@
 --%>
 
 
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <html>
   <head>
 <link href="<c:url value="/resources/css/main.css"/>" rel="stylesheet"/>
@@ -19,6 +19,7 @@
   <p>User name - ${user.name}</p>
   <p>User password - ${user.password}</p>
   <p>User is administrator - ${user.admin}</p>
+  <p>${locale}</p>
 
   </body>
 </html>
