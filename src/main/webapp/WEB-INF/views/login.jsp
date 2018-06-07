@@ -19,6 +19,11 @@
 
     <fieldset>
 
+        <span>
+            <a href="?lang=ru">ru</a>
+            <a href="?lang=en">en</a>
+        </span>
+
         <form:label path="name"><spring:message code="username"/></form:label>
         <form:input path="name"/>
         <form:errors path="name"/>

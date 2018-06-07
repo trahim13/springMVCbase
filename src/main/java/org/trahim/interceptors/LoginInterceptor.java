@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 
 
+@Component
 public class LoginInterceptor extends HandlerInterceptorAdapter {
 
     @Override

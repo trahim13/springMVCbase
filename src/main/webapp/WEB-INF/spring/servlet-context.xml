@@ -18,7 +18,11 @@
     <mvc:interceptors>
         <mvc:interceptor>
             <mvc:mapping path="/*"/>
-            <bean class="org.trahim.interceptors.LoginInterceptor"/>
+            <ref bean="loginInterceptor"/>
+        </mvc:interceptor>
+        <mvc:interceptor>
+            <mvc:mapping path="/*"/>
+            <ref bean="changeInterceptor"/>
         </mvc:interceptor>
     </mvc:interceptors>
 
@@ -26,5 +30,14 @@
     <bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
         <property name="basename" value="/WEB-INF/locales/messages"/>
         <property name="defaultEncoding" value="utf-8"/>
+    </bean>
+
+
+    <bean id="changeInterceptor" class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+        <property name="paramName" value="lang"/>
+    </bean>
+
+    <bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver">
+        <property name="defaultLocale" value="en"/>
     </bean>
 </beans>
