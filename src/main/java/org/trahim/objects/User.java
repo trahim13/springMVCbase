@@ -3,10 +3,10 @@ package org.trahim.objects;
 import javax.validation.constraints.Size;
 
 public class User {
-    @Size(min = 6, message = "Имя должно быть не короче 6 символов.")
+    @Size(min = 6, message = "{user.name.size.error}")
     private String name;
 
-    @Size(min = 6, max = 10, message = "Пароль должен быть от 6 до 10 символов.")
+    @Size(min = 6, max = 10, message = "{user.password.size.error}")
     private String password;
 
     private boolean admin;
