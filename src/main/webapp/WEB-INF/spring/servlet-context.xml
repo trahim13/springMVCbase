@@ -16,10 +16,10 @@
     </bean>
 
     <mvc:interceptors>
-        <mvc:interceptor>
-            <mvc:mapping path="/*"/>
-            <ref bean="loginInterceptor"/>
-        </mvc:interceptor>
+        <!--<mvc:interceptor>-->
+            <!--<mvc:mapping path="/*"/>-->
+            <!--<ref bean="loginInterceptor"/>-->
+        <!--</mvc:interceptor>-->
         <mvc:interceptor>
             <mvc:mapping path="/*"/>
             <ref bean="changeInterceptor"/>

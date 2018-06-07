@@ -8,6 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.view.RedirectView;
 import org.trahim.objects.User;
 
 import javax.validation.Valid;
@@ -32,20 +34,29 @@ public class LoginController {
     }
 
     @RequestMapping(value = "/check-user", method = RequestMethod.POST)
-    public ModelAndView checkUser(@Valid @ModelAttribute("user") User user, BindingResult bindingResult, ModelAndView modelAndView, Locale locale) {
+    public ModelAndView checkUser(@Valid @ModelAttribute("user") User user, BindingResult bindingResult, ModelAndView modelAndView, Locale locale, RedirectAttributes redirectAttributes) {
 
         if (bindingResult.hasErrors()) {
-
-
             modelAndView.setViewName("login");
         } else {
-            modelAndView.setViewName("main");
-            modelAndView.addObject("locale", messageSource.getMessage("locale", new String[]{locale.getDisplayName(locale)}, locale));
+            RedirectView redirectView = new RedirectView("mainpage");
+            redirectView.setStatusCode(HttpStatus.MOVED_PERMANENTLY);
+
+            String message = messageSource.getMessage("locale", new String[]{locale.getDisplayName(locale)}, locale);
+//            redirectAttributes.addFlashAttribute("locale", message);
+            modelAndView.addObject("locale", message);
+            modelAndView.setView(redirectView);
+
 
 
 //            modelAndView.addObject("user", user);
         }
         return modelAndView;
+    }
+
+    @RequestMapping(value = "/mainpage", method = RequestMethod.GET)
+    public String goToMainPage(ModelAndView modelAndView,  @ModelAttribute("locale") String s) {
+        return "main";
     }
 
     @RequestMapping(value = "/failed", method = RequestMethod.GET)
