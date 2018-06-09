@@ -2,29 +2,43 @@ package org.trahim.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
+import org.trahim.objects.UploadedFile;
+import org.trahim.validators.FileValidator;
 
 import java.io.*;
 import java.util.Locale;
 
+@SessionAttributes("fileName")
 @Controller
 public class FileController {
 
     @Autowired
-    MessageSource messageSource;
+   private MessageSource messageSource;
 
-    @RequestMapping(value = "/upoloadFile", method = RequestMethod.POST)
+    @Autowired
+    private FileValidator fileValidator;
+
+    @RequestMapping(value = "/uploadFile", method = RequestMethod.POST)
     @ResponseBody
-    public String uploadFile(@RequestParam("file") MultipartFile file, Locale locale) {
+    public ModelAndView uploadFile(@ModelAttribute("uploadedFile") UploadedFile uploadedFile, BindingResult bindingResult, Locale locale) {
 
-        String name = null;
+        ModelAndView modelAndView = new ModelAndView();
 
-        if (!file.isEmpty()) {
+        String name;
+        MultipartFile file = uploadedFile.getFile();
+
+        fileValidator.validate(uploadedFile, bindingResult);
+
+        if (bindingResult.hasErrors()) {
+            modelAndView.setViewName("main");
+        } else {
             try {
                 name = file.getOriginalFilename();
                 File dir = new File("D:\\Загрузки" + File.separator + "tmpFile");
@@ -41,18 +55,26 @@ public class FileController {
                 stream.flush();
                 stream.close();
 
-                return messageSource.getMessage("successfully", null, locale) + ": " + name;
-
-
+                RedirectView redirectView = new RedirectView("fileuploaded");
+                redirectView.setStatusCode(HttpStatus.FOUND);
+                modelAndView.setView(redirectView);
+                modelAndView.addObject("fileName", name);
             } catch (IOException e) {
                 e.printStackTrace();
-                return messageSource.getMessage("error", null, locale) + e.getMessage();
-            }
+                String message = messageSource.getMessage("error", null, locale) + e.getMessage();
+                modelAndView.addObject("message", message);
+                return modelAndView;
 
-        } else {
-            return messageSource.getMessage("failed", new String[]{name}, locale);
+            }
 
         }
 
+        return modelAndView;
     }
+
+    @RequestMapping(value = "/fileuploaded", method = RequestMethod.GET)
+    public String fileUploaded() {
+        return "fileuploaded";
+    }
+
 }
