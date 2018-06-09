@@ -15,6 +15,32 @@
     <title>Login</title>
 </head>
 <body>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+<script type="text/javascript">
+    function doAjaxPassword() {
+        $.ajax({
+            url: 'checkPassword',
+            data: ({password: $('#password').val()}),
+            success: function (data) {
+                $('#passwordResult').html(data);
+            }
+        });
+    }
+
+    function doAjaxName() {
+        $.ajax({
+            url: 'checkName',
+            data: ({name: $('#name').val()}),
+            success: function (data) {
+                $('#nameResult').html(data);
+            }
+        });
+    }
+</script>
+
+
 <form:form modelAttribute="user" method="post" action="check-user">
 
     <fieldset>
@@ -25,12 +51,14 @@
         </span>
 
         <form:label path="name"><spring:message code="username"/></form:label>
-        <form:input path="name"/>
+        <form:input path="name" onkeyup="doAjaxName()"/>
         <form:errors path="name"/>
+        <span style="float: right;" id="NameResult"></span>
 
         <form:label path="password"><spring:message code="password"/></form:label>
-        <form:password path="password"/>
+        <form:password path="password" onkeyup="doAjaxPassword()"/>
         <form:errors path="password"/>
+        <span style="float: right;" id="passwordResult"></span>
 
 
     </fieldset>

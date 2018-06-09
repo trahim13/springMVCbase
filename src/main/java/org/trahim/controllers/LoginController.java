@@ -68,6 +68,33 @@ public class LoginController {
     }
 
 
+    @RequestMapping(value = "/checkPassword", method = RequestMethod.GET, produces = {"text/html; charset=utf8"})
+    public @ResponseBody
+    String checkPassword(@RequestParam("password") String password, Locale locale) {
+
+
+
+        if (password.length() < 6 || password.length() > 10) {
+            String number = String.valueOf(password.length());
+            return messageSource.getMessage("checkPassword", new String[]{number}, locale);
+        }
+
+        return "";
+
+    }
+
+    @RequestMapping(value = "/checkName", method = RequestMethod.GET, produces = {"text/html; charset=utf8"})
+    public @ResponseBody
+    String checkName(@RequestParam("name") String name, Locale locale) {
+
+        if (name.length() < 6) {
+            String number = String.valueOf(name.length());
+            return messageSource.getMessage("checkName", new String[]{number}, locale);
+        }
+        return "";
+    }
+
+
     @RequestMapping(value = "/get-json-user/{name}/{password}/{admin}", method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
     public User getJsonUser(@PathVariable("name") String name, @PathVariable("password") String password, @PathVariable("admin") boolean admin) {
