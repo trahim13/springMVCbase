@@ -22,6 +22,12 @@
 <p><spring:message code="admin"/> - ${user.admin}</p>
 <p>${locale}</p>
 
+<form method="post" action="upoloadFile" enctype="multipart/form-data">
+    <spring:message code="file"/> <input type="file" name="file"/>
+    <input type="submit" value="<spring:message code="upload"/>"/>
+    <spring:message code="uploadFile"/>
+</form>
+
 
 </body>
 </html>
