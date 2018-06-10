@@ -53,7 +53,7 @@
         <form:label path="name"><spring:message code="username"/></form:label>
         <form:input path="name" onkeyup="doAjaxName()"/>
         <form:errors path="name"/>
-        <span style="float: right;" id="NameResult"></span>
+        <span style="float: right;" id="nameResult"></span>
 
         <form:label path="password"><spring:message code="password"/></form:label>
         <form:password path="password" onkeyup="doAjaxPassword()"/>
